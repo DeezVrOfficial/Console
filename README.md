@@ -14,7 +14,3 @@
 
 # Console
 **The** administrator library for Gorilla Tag mods to manage their users.
-
----
-
-This does not contain the source of console it's just for getting the console assets!
