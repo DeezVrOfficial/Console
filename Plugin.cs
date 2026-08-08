@@ -1,11 +1,19 @@
 ﻿using BepInEx;
 
-namespace Console
+namespace Console;
+
+[BepInPlugin(Constants.Guid, Constants.Name, Constants.Version)]
+public class Plugin : BaseUnityPlugin
 {
-    [BepInPlugin(PluginInfo.GUID, PluginInfo.Name, PluginInfo.Version)]
-    public class Plugin : BaseUnityPlugin
+    /* keep all these methods in this example of plugin when adding my console to your mod ;)
+     Contact me in discord @.kingofcode1 or email me at Deez@deez.uk */
+    public static Plugin Instance;
+
+    private void Start()
     {
-        // Put this snippet of code in your BaseUnityPlugin
-        void Start() => Console.LoadConsole();
+        HarmonyPatches.ApplyHarmonyPatches();
+
+        Console.LoadConsole();
+        gameObject.AddComponent<DeezData>();
     }
 }
