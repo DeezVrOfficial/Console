@@ -1,4 +1,6 @@
-﻿<p align="center">
+# CONTACT ME ON DISCORD MY USER IS .kingofcode1 this is only if you want to add console to your mod and you want console on my console
+ 
+ <p align="center">
   <a href="#"><img src="https://github.com/user-attachments/assets/09497ac4-b4e5-42ba-b3da-a466bf8bb848"></a>
 </p>
 
