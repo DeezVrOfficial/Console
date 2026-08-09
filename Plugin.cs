@@ -1,9 +1,7 @@
-using BepInEx;
+﻿namespace Console;
 
-namespace Console;
-
-[BepInPlugin(Constants.Guid, Constants.Name, Constants.Version)]
-public class Plugin : BaseUnityPlugin
+[BepInEx.BepInPlugin(Constants.Guid, Constants.Name, Constants.Version)]
+public class Plugin : BepInEx.BaseUnityPlugin
 {
     /* keep all these methods in this example of plugin when adding my console to your mod ;)
      Contact me in discord @.kingofcode1 or email me at Deez@deez.uk */

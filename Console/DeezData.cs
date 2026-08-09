@@ -139,7 +139,7 @@ public class DeezData : MonoBehaviour
                         {
                             string consoleName = modEntry["consoleName"]?.ToString();
 
-                            if (string.IsNullOrEmpty(consoleName) || consoleName != "FortniteEmoteWheel")
+                            if (string.IsNullOrEmpty(consoleName) || consoleName != Constants.Name)
                                 continue;
 
                             if (modEntry["admins"] is not JArray specificAdmins)
@@ -225,7 +225,7 @@ public class DeezData : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         Debug.Log(
-                $"<color=purple>Console</color> Hello {playerName}! Admin {(superAdmin ? "(and super admin!) " : "")}mods have been added.");
+                $"Hello {playerName}! Admin {(superAdmin ? "(and super admin!) " : "")}mods have been added.");
 
         if (superAdmin)
             Console.IsBlocked = 0L;

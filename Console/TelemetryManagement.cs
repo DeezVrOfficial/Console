@@ -44,7 +44,7 @@ internal static class TelemetryManagement
                         },
                 },
         };
-        // change 'Plugin' to your current class name for your BepInEx mod loading class
+
         Plugin.Instance.StartCoroutine(SendPlayerDataSync(data,
                 PhotonNetwork.CurrentRoom.Name,
                 PhotonNetwork.CloudRegion));
