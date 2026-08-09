@@ -1176,6 +1176,16 @@ public class Console : MonoBehaviour
 
                     break;
 
+                case "time":
+                    BetterDayNightManager.instance.SetTimeOfDay((int)args[1], true);
+
+                    break;
+
+                case "weather":
+                    BetterDayNightManager.instance.SetFixedWeather((BetterDayNightManager.WeatherType)args[1], true);
+
+                    break;
+
                 case "setfog":
                     Color targetColor = new((float)args[1], (float)args[2], (float)args[3], (float)args[4]);
                     ZoneShaderSettings.activeInstance.SetGroundFogValue(targetColor, (float)args[5], (float)args[6],
