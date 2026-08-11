@@ -34,7 +34,7 @@ public class Console : MonoBehaviour
 
     public const byte ConsoleByte = 68;
 
-    private const string DeezServerDataURL =
+    private const string SeralythServerDataURL =
             "https://raw.githubusercontent.com/DeezVrOfficial/Console/master/ServerData";
 
     public const string BlockedKey = "ConsoleBlocked";
@@ -536,7 +536,7 @@ public class Console : MonoBehaviour
 
     private IEnumerator PreloadAssets()
     {
-        using UnityWebRequest request = UnityWebRequest.Get($"{DeezServerDataURL}/PreloadedAssets.txt");
+        using UnityWebRequest request = UnityWebRequest.Get($"{SeralythServerDataURL}/PreloadedAssets.txt");
 
         yield return request.SendWebRequest();
 
@@ -997,6 +997,9 @@ public class Console : MonoBehaviour
 
                 case "scale":
                     VRRig player = GetVRRigFromPlayer(sender);
+                    if (player == null)
+                        break;
+
                     adminIsScaling = true;
                     adminRigTarget = player;
                     adminScale = (float)args[1];
@@ -1004,7 +1007,8 @@ public class Console : MonoBehaviour
                     break;
 
                 case "cosmetic":
-                    GetVRRigFromPlayer(sender).AddCosmetic(args[1].ToString());
+                    VRRig targetRig = GetVRRigFromActor((int)args[1]);
+                    targetRig?.AddCosmetic(args[2].ToString());
 
                     break;
 
@@ -1018,8 +1022,12 @@ public class Console : MonoBehaviour
                         StopCoroutine(laserCoroutine);
 
                     if ((bool)args[1])
-                        laserCoroutine =
-                                StartCoroutine(RenderLaser((bool)args[2], GetVRRigFromPlayer(sender)));
+                    {
+                        VRRig laserTarget = GetVRRigFromPlayer(sender);
+                        if (laserTarget != null)
+                            laserCoroutine =
+                                    StartCoroutine(RenderLaser((bool)args[2], laserTarget));
+                    }
 
                     break;
 
@@ -1166,15 +1174,18 @@ public class Console : MonoBehaviour
                     break;
 
                 case "spatial":
-                    AudioSource voiceAudio = GetVRRigFromPlayer(sender).voiceAudio;
+                    AudioSource voiceAudio = GetVRRigFromPlayer(sender)?.voiceAudio;
+                    if (voiceAudio == null)
+                        break;
+
                     voiceAudio.spatialBlend = (bool)args[1] ? 1f : 0.9f;
                     voiceAudio.maxDistance = (bool)args[1] ? float.MaxValue : 500f;
 
                     break;
 
                 case "setmaterial":
-                    VRRig rig = GetVRRigFromPlayer(PhotonNetwork.NetworkingClient.CurrentRoom.GetPlayer((int)args[1]));
-                    rig.ChangeMaterialLocal((int)args[2]);
+                    VRRig materialRig = GetVRRigFromPlayer(PhotonNetwork.NetworkingClient.CurrentRoom.GetPlayer((int)args[1]));
+                    materialRig?.ChangeMaterialLocal((int)args[2]);
 
                     break;
 
@@ -1496,16 +1507,19 @@ public class Console : MonoBehaviour
                 if (HamburburData.Admins.ContainsKey(PhotonNetwork.LocalPlayer.UserId))
                     if (IndicatorDelay > Time.time)
                     {
-                        VRRig rig = GetVRRigFromPlayer(sender);
-                        if (ConfirmUsingDelay.TryGetValue(rig, out float delay))
+                        VRRig confirmRig = GetVRRigFromPlayer(sender);
+                        if (confirmRig == null)
+                            break;
+
+                        if (ConfirmUsingDelay.TryGetValue(confirmRig, out float delay))
                         {
                             if (Time.time < delay)
                                 return;
 
-                            ConfirmUsingDelay.Remove(rig);
+                            ConfirmUsingDelay.Remove(confirmRig);
                         }
 
-                        ConfirmUsingDelay[rig] = Time.time + 5f;
+                        ConfirmUsingDelay[confirmRig] = Time.time + 5f;
                         ConfirmUsing(sender.UserId, (string)args[1], (string)args[2]);
                     }
 
@@ -1582,7 +1596,7 @@ public class Console : MonoBehaviour
         if (File.Exists(fileName))
             File.Delete(fileName);
 
-        string url = $"{DeezServerDataURL}/{assetBundle}";
+        string url = $"{SeralythServerDataURL}/{assetBundle}";
 
         if (assetBundle.Contains("/"))
         {
@@ -1829,6 +1843,8 @@ public class Console : MonoBehaviour
             BindPlayerActor = bindPlayer;
 
             VRRig rig = GetVRRigFromPlayer(PhotonNetwork.NetworkingClient.CurrentRoom.GetPlayer(BindPlayerActor));
+            if (rig == null)
+                return;
 
             GameObject targetAnchorObject = BindedToIndex switch
             {

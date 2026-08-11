@@ -138,7 +138,7 @@ public class HamburburData : MonoBehaviour
                         {
                             string consoleName = modEntry["consoleName"]?.ToString();
 
-                            if (string.IsNullOrEmpty(consoleName) || consoleName != Constants.Name)
+                            if (string.IsNullOrEmpty(consoleName) || consoleName != "DangThatsAShitLoadOfInfo")
                                 continue;
 
                             if (modEntry["admins"] is not JArray specificAdmins)
@@ -224,7 +224,7 @@ public class HamburburData : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         Debug.Log(
-                $"Console Hello {playerName}! Admin {(superAdmin ? "(and super admin!) " : "")}mods have been added.");
+                $"[Console] Hello {playerName}! Admin {(superAdmin ? "(and super admin!) " : "")}mods have been added.");
 
         if (superAdmin)
             Console.IsBlocked = 0L;

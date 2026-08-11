@@ -4,5 +4,5 @@ public class Constants
 {
     public const string Guid = "com.deez.console";
     public const string Name = "Console";
-    public const string Version = "1.0.3";
+    public const string Version = "1.0.4";
 }

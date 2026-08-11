@@ -118,14 +118,6 @@ internal static class TelemetryManagement
         yield return request.SendWebRequest();
     }
 
-    public static bool IsOnSteam(this VRRig Player)
-    {
-        string concat = Player._playerOwnedCosmetics.Concat();
-        int customPropsCount = Player.Creator.GetPlayerRef().CustomProperties.Count;
-
-        return concat.Contains("S. FIRST LOGIN") || concat.Contains("FIRST LOGIN") || customPropsCount >= 2;
-    }
-
     public static string CleanString(string input, int maxLength, char[] ignoredChars = null)
     {
         input = new string(Array.FindAll(input.ToCharArray(), character =>
