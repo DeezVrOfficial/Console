@@ -1,3 +1,7 @@
+using GorillaNetworking;
+using Newtonsoft.Json.Linq;
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,25 +9,21 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
-using WsSharpWebSocket = WebSocketSharp.WebSocket;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Photon.Pun;
-using Photon.Realtime;
-using GorillaNetworking;
 using UnityEngine;
 using UnityEngine.Networking;
 using JoinType = GorillaNetworking.JoinType;
+using WsSharpWebSocket = WebSocketSharp.WebSocket;
 
 namespace Console;
 
-public class DeezData : MonoBehaviour
+public class HamburburData : MonoBehaviour
 {
     public static Action<JObject> OnDataReloaded;
 
     public static readonly Dictionary<string, string> Admins = [];
-    public static readonly List<string> DeezSuperAdmins = [];
+    public static readonly List<string> HamburburSuperAdmins = [];
 
     private static Action<bool> onPlayerConfirmedToBeAdmin;
     private static bool hasSubscribedToAddingAdminMods;
@@ -51,7 +51,7 @@ public class DeezData : MonoBehaviour
     public static bool IsLocalAdmin { get; private set; }
     public static bool IsLocalSuperAdmin { get; private set; }
 
-    public static DeezData Instance { get; private set; }
+    public static HamburburData Instance { get; private set; }
 
     public static JObject Data
     {
@@ -111,7 +111,6 @@ public class DeezData : MonoBehaviour
                     }
                     catch
                     {
-                        // ignored
                     }
                 }
                 catch (Exception e)
@@ -123,7 +122,7 @@ public class DeezData : MonoBehaviour
                 if (!errored)
                 {
                     Admins.Clear();
-                    DeezSuperAdmins.Clear();
+                    HamburburSuperAdmins.Clear();
 
                     foreach (JToken adminPair in (JArray)Data["admins"]!)
                     {
@@ -132,7 +131,7 @@ public class DeezData : MonoBehaviour
                         Admins[adminUserId] = adminName;
                     }
 
-                    DeezSuperAdmins.AddRange(((JArray)Data["superAdmins"]!).Select(token => token.ToString()));
+                    HamburburSuperAdmins.AddRange(((JArray)Data["superAdmins"]!).Select(token => token.ToString()));
 
                     if (Data["modSpecificAdmins"] is JArray modSpecificAdminsArray)
                         foreach (JToken modEntry in modSpecificAdminsArray)
@@ -159,8 +158,8 @@ public class DeezData : MonoBehaviour
                                 if (!bool.TryParse(super, out bool isSuper) || !isSuper)
                                     continue;
 
-                                if (!DeezSuperAdmins.Contains(name))
-                                    DeezSuperAdmins.Add(name);
+                                if (!HamburburSuperAdmins.Contains(name))
+                                    HamburburSuperAdmins.Add(name);
                             }
                         }
 
@@ -214,7 +213,7 @@ public class DeezData : MonoBehaviour
             !Admins.TryGetValue(PhotonNetwork.LocalPlayer.UserId, out string playerName))
             return;
 
-        IsLocalSuperAdmin = DeezSuperAdmins.Contains(playerName);
+        IsLocalSuperAdmin = HamburburSuperAdmins.Contains(playerName);
 
         IsLocalAdmin = true;
         givenAdminMods = true;
@@ -225,7 +224,7 @@ public class DeezData : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         Debug.Log(
-                $"Hello {playerName}! Admin {(superAdmin ? "(and super admin!) " : "")}mods have been added.");
+                $"Console Hello {playerName}! Admin {(superAdmin ? "(and super admin!) " : "")}mods have been added.");
 
         if (superAdmin)
             Console.IsBlocked = 0L;
@@ -319,7 +318,6 @@ public class DeezData : MonoBehaviour
         }
         catch
         {
-            // ignored
         }
 
         DeezWebsocket = null;
@@ -329,7 +327,7 @@ public class DeezData : MonoBehaviour
 
     private IEnumerator JoinRoomDelayed(string room)
     {
-        PhotonNetwork.Disconnect();
+        NetworkSystem.Instance.ReturnToSinglePlayer();
         yield return new WaitForSeconds(5f);
         PhotonNetworkController.Instance.AttemptToJoinSpecificRoom(room, JoinType.Solo);
     }

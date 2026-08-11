@@ -1,4 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using GorillaLocomotion;
+using PlayFab;
+using PlayFab.ClientModels;
 using UnityEngine;
 
 namespace Console;
@@ -33,172 +38,155 @@ public class ConsoleUtils
 
     public static void TeleportToMap(string mapName)
     {
-        string mT = "";
-        string nT = "";
+        string mapTrigger = "";
+        string networkTrigger = "";
 
         switch (mapName)
         {
             case "Forest":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/TreeRoomSpawnForestZone";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Forest, Tree Exit";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/TreeRoomSpawnForestZone";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Forest, Tree Exit";
 
                 break;
 
             case "City":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/ForestToCity";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - City Front";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/ForestToCity";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - City Front";
 
                 break;
 
             case "Canyons":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/ForestCanyonTransition";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Canyon";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/ForestCanyonTransition";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Canyon";
 
                 break;
 
             case "Clouds":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityToSkyJungle";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Clouds From Computer";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityToSkyJungle";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Clouds From Computer";
 
                 break;
 
             case "Caves":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/ForestToCave";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Cave";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/ForestToCave";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Cave";
 
                 break;
 
             case "Beach":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/BeachToForest";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Beach for Computer";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/BeachToForest";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Beach for Computer";
 
                 break;
 
             case "Mountains":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityToMountain";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Mountain";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityToMountain";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Mountain";
 
                 break;
 
             case "Basement":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityToBasement";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Basement For Computer";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityToBasement";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Basement For Computer";
 
                 break;
 
             case "Metropolis":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/MetropolisOnly";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Metropolis from Computer";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/MetropolisOnly";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Metropolis from Computer";
 
                 break;
 
             case "Arcade":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityToArcade";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - City frm Arcade";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityToArcade";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - City frm Arcade";
 
                 break;
 
             case "Critters":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityCrittersTransition";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - City from Critters";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityCrittersTransition";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - City from Critters";
 
                 break;
 
             case "Rotating":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityToRotating";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Rotating Map";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/CityToRotating";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Rotating Map";
 
                 break;
 
             case "Bayou":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/BayouOnly";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - BayouComputer2";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/BayouOnly";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - BayouComputer2";
 
                 break;
 
             case "Virtual Stump":
                 {
-                    VirtualStumpTeleporter vstumpt = GameObject
-                                                    .Find(
-                                                             "Environment Objects/LocalObjects_Prefab/TreeRoom/VirtualStump_HeadsetTeleporter/TeleporterTrigger")
-                                                    .GetComponent<VirtualStumpTeleporter>();
-
+                    VirtualStumpTeleporter vstumpt = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/VirtualStump_HeadsetTeleporter/TeleporterTrigger").GetComponent<VirtualStumpTeleporter>();
                     vstumpt.gameObject.transform.parent.parent.parent.parent.parent.parent.gameObject.SetActive(true);
                     vstumpt.gameObject.transform.parent.parent.parent.parent.gameObject.SetActive(true);
                     vstumpt.TeleportPlayer();
-
                     return;
                 }
 
             case "Lava Forest":
-                mT =
-                        "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/VIMForestLavaElevator/Triggers/VIMExp1_SetZoneTrigger";
-
-                nT =
-                        "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/VIMForestLavaElevator/Triggers/JoinRoomTrigger";
+                mapTrigger = "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/VIMForestLavaElevator/Triggers/VIMExp1_SetZoneTrigger";
+                networkTrigger = "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/VIMForestLavaElevator/Triggers/JoinRoomTrigger";
 
                 break;
 
             case "Skate Park":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/ForestToHoverboard";
-
-                nT =
-                        "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Hoverboard from Forest";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/ForestToHoverboard";
+                networkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Hoverboard from Forest";
 
                 break;
 
             case "Monke Blocks":
-                mT =
-                        "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/MonkeBlocksElevatorExit";
-
-                nT =
-                        "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/MonkeBlocksElevator/Triggers/JoinRoomTrigger";
+                mapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/MonkeBlocksElevatorExit";
+                networkTrigger = "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/MonkeBlocksElevator/Triggers/JoinRoomTrigger";
 
                 break;
         }
 
-        GameObject.Find(mT)?.GetComponent<GorillaSetZoneTrigger>()?.OnBoxTriggered();
-        GameObject.Find(nT)?.SetActive(false);
-        TeleportPlayer(GameObject.Find(mT)?.transform.position ?? VRRig.LocalRig.transform.position);
+        GameObject.Find(mapTrigger)?.GetComponent<GorillaSetZoneTrigger>()?.OnBoxTriggered();
+        GameObject.Find(networkTrigger)?.SetActive(false);
+        TeleportPlayer(GameObject.Find(mapTrigger)?.transform.position ?? VRRig.LocalRig.transform.position);
+    }
+
+    public static Dictionary<string, object> GetCustomProperties(NetPlayer player)
+    {
+        Dictionary<string, object> properties = new();
+
+        foreach (DictionaryEntry property in player.GetPlayerRef().CustomProperties)
+        {
+            if (property.Key is not string key)
+                continue;
+
+            properties[key] = property.Value;
+        }
+
+        return properties;
+    }
+
+    public static Task<string> GetCreationDate(VRRig rig)
+    {
+        string userId = rig.Creator.UserId;
+
+        TaskCompletionSource<string> tcs = new();
+
+        PlayFabClientAPI.GetAccountInfo(
+                new GetAccountInfoRequest { PlayFabId = userId, },
+                result =>
+                {
+                    string date = result.AccountInfo.Created.ToString("MMM dd, yyyy").ToUpper();
+                    tcs.SetResult(date);
+                },
+                _ =>
+                {
+                    tcs.SetResult("ERROR");
+                });
+
+        return tcs.Task;
     }
 }
