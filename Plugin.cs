@@ -9,7 +9,7 @@ public class Plugin : BepInEx.BaseUnityPlugin
 
     private void Start()
     {
-        /* HarmonyPatches.ApplyHarmonyPatches(); Remove this if you already have harmony patches to harmony0 */
+        /* new Harmony(Constants.PluginGuid).PatchAll(); Remove this if you already have harmony patches */
 
         Console.LoadConsole();
         gameObject.AddComponent<HamburburData>();
