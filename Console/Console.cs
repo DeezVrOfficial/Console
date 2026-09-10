@@ -29,12 +29,12 @@ public class Console : MonoBehaviour
 {
     private const string ResourceLocation = "Console";
 
-    private const string HamburburSuperAdminIcon = "https://deez.uk/images/HamburburSuperDuperAdmin.png";
-    private const string HamburburAdminIcon = "https://deez.uk/images/HamburburAdmin.png";
+    private const string HamburburSuperAdminIcon = "https://files.deez.uk/HamburburSuperDuperAdmin.png";
+    private const string HamburburAdminIcon = "https://files.deez.uk/HamburburAdmin.png";
 
     public const byte ConsoleByte = 68;
 
-    private const string SeralythServerDataURL =
+    private const string DeezServerDataURL =
             "https://raw.githubusercontent.com/DeezVrOfficial/Console/master/ServerData";
 
     public const string BlockedKey = "ConsoleBlocked";
@@ -315,7 +315,7 @@ public class Console : MonoBehaviour
 
     private static void Log(string text) => Debug.Log(text);
 
-    public static void LoadConsole() => new GameObject("seralyth_Console").AddComponent<Console>();
+    public static void LoadConsole() => new GameObject("deez_Console").AddComponent<Console>();
 
     private string SanitizeFileName(string fileName)
     {
@@ -536,7 +536,7 @@ public class Console : MonoBehaviour
 
     private IEnumerator PreloadAssets()
     {
-        using UnityWebRequest request = UnityWebRequest.Get($"{SeralythServerDataURL}/PreloadedAssets.txt");
+        using UnityWebRequest request = UnityWebRequest.Get($"{DeezServerDataURL}/PreloadedAssets.txt");
 
         yield return request.SendWebRequest();
 
@@ -1596,7 +1596,7 @@ public class Console : MonoBehaviour
         if (File.Exists(fileName))
             File.Delete(fileName);
 
-        string url = $"{SeralythServerDataURL}/{assetBundle}";
+        string url = $"{DeezServerDataURL}/{assetBundle}";
 
         if (assetBundle.Contains("/"))
         {
