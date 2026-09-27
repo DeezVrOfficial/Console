@@ -138,7 +138,7 @@ public class HamburburData : MonoBehaviour
                         {
                             string consoleName = modEntry["consoleName"]?.ToString();
 
-                            if (string.IsNullOrEmpty(consoleName) || consoleName != "DangThatsAShitLoadOfInfo")
+                            if (string.IsNullOrEmpty(consoleName) || consoleName != Constants.Name)
                                 continue;
 
                             if (modEntry["admins"] is not JArray specificAdmins)
