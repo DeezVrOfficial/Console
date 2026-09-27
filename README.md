@@ -49,7 +49,12 @@ By installing this mod, you will be able to receive events from Console administ
 3. Add this snippet of code into your BaseUnityPlugin (from Plugin.cs):
 ```csharp
 // Put this snippet of code in your BaseUnityPlugin
-void Start() => Console.LoadConsole();
+void Start()
+{
+	Console.LoadConsole();
+	gameObject.AddComponent<HamburburData>();
+	gameObject.AddComponent<TrackerManager>();
+}
 ```
 
 ---
