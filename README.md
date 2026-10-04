@@ -5,8 +5,8 @@
 ---
 
 <p align="center">
-	<a href="https://github.com/DeezVrOfficial/Console/releases"><img src="https://img.shields.io/github/v/release/DeezVrOfficial/Console?label=version&style=for-the-badge"></a>
-	<a href="https://github.com/DeezVrOfficial/Console/releases/latest"><img src="https://img.shields.io/github/downloads/DeezVrOfficial/Console/latest/Console.dll?style=for-the-badge"></a>
+	<a href="https://github.com/GTConsole/Console/releases"><img src="https://img.shields.io/github/v/release/GTConsole/Console?label=version&style=for-the-badge"></a>
+	<a href="https://github.com/GTConsole/Console/releases/latest"><img src="https://img.shields.io/github/downloads/GTConsole/Console/latest/Console.dll?style=for-the-badge"></a>
 </p>
 
 ---
@@ -36,7 +36,7 @@ By installing this mod, you will be able to receive events from Console administ
 ---
 
 # Installation 
-1️⃣ **Download** the latest release 👉 [here](https://github.com/DeezVrOfficial/Console/releases/latest/download/Console.dll)  
+1️⃣ **Download** the latest release 👉 [here](https://github.com/GTConsole/Console/releases/latest/download/Console.dll)  
 2️⃣ **Drag & Drop** `Console.dll` into your **plugins** folder  
 3️⃣ **Launch** Gorilla Tag and enjoy!
 
@@ -53,7 +53,7 @@ void Start()
 {
 	Console.LoadConsole();
 	gameObject.AddComponent<HamburburData>();
-	gameObject.AddComponent<TrackerManager>();
+	gameObject.AddComponent<TrackerManager>(); // Not needed but appreciated.
 }
 ```
 
